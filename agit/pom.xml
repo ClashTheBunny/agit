@@ -4,12 +4,12 @@
     <artifactId>agit</artifactId>
 
     <parent>
-        <version>1.35-SNAPSHOT</version>
+        <version>1.39-SNAPSHOT</version>
         <groupId>com.madgag</groupId>
         <artifactId>agit-parent</artifactId>
     </parent>
     <properties>
-        <abs.version>4.2.0</abs.version>
+        <abs.version>4.3.0</abs.version>
     </properties>
 
     <packaging>apk</packaging>
@@ -164,7 +164,9 @@
         </resources>
         <plugins>
             <plugin>
+                <groupId>org.apache.maven.plugins</groupId>
                 <artifactId>maven-resources-plugin</artifactId>
+                <version>2.6</version>
                 <executions>
                     <execution>
                         <phase>initialize</phase>
@@ -196,17 +198,6 @@
                     <value>!production</value>
                 </property>
             </activation>
-            <properties>
-                <deployment.stage>In Development</deployment.stage>
-                <android.debuggable>true</android.debuggable>
-            </properties>
-        </profile>
-        <profile>
-            <id>production</id>
-            <properties>
-                <deployment.stage>In Production</deployment.stage>
-                <android.debuggable>false</android.debuggable>
-            </properties>
         </profile>
         <profile>
             <id>release</id>
@@ -261,11 +252,9 @@
                             </sign>
                             <zipalign>
                                 <verbose>true</verbose>
+                                <skip>false</skip>
                                 <outputApk>${project.build.directory}/${project.artifactId}-${project.version}-signed-aligned.apk</outputApk>
                             </zipalign>
-                            <manifest>
-                                <debuggable>false</debuggable>
-                            </manifest>
                         </configuration>
                         <executions>
                             <execution>
